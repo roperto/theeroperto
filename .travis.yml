@@ -1,0 +1,20 @@
+language: php
+
+php:
+  - 7
+
+# If a new commit is pushed, other builds can abort anyway.
+git:
+  depth: 1
+
+before_script:
+  - php -S localhost:8000 &
+  - composer install --no-interaction
+  - cp .env.travis .env
+  - php artisan key:generate -n
+  - cp .env.travis .env.behat
+  - php artisan key:generate -n --env behat
+
+script:
+  - vendor/bin/phpunit
+  - vendor/behat/behat/bin/behat
