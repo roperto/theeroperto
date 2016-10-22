@@ -7,13 +7,13 @@ Feature: The home page
     Given I am on the homepage
     Then I should see "Which site would you like to visit?"
 
-#  Scenario Outline: Selection site
-#    Given I am on the homepage
-#    When I click on <name>'s image
-#    Then I should be to <name>'s website
-#    Examples:
-#      | name      |
-#      | Christina |
-#      | Daniel    |
-#      | Luigi     |
-#      | Amelia    |
+  Scenario Outline: Select site
+    Given I am on the homepage
+    When I click on <name>'s image
+    Then I should be on <name>'s website
+    Examples:
+      | name      |
+      | Christina |
+      | Daniel    |
+      | Luigi     |
+      | Amelia    |

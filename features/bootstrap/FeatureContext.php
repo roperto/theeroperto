@@ -18,4 +18,19 @@ class FeatureContext extends MinkContext implements Context {
      */
     public function __construct() {
     }
+
+    /**
+     * @When /^I click on (.*)'s image$/
+     */
+    public function iClickOnSImage($name) {
+        $this->clickLink($name);
+    }
+
+    /**
+     * @Then /^I should be on (.*)'s website$/
+     */
+    public function iShouldBeOnSWebsite($name) {
+        $this->assertSession()->addressEquals($this->locatePath($name));
+        $this->assertSession()->elementContains('xpath', '/head/title', $name.' Thee Roperto');
+    }
 }
