@@ -8,7 +8,7 @@
 <body>
 Which site would you like to visit?
 
-@foreach(['Christina', 'Daniel', 'Luigi', 'Amelia'] as $who)
+@foreach($theeroperto['names'] as $who)
     <a href="{{url($who)}}"><img src="{{url('img/home/'.strtolower($who).'.png')}}"
                                  alt="{{$who}}" title="{{$who}}"/></a>
 @endforeach

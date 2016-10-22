@@ -10,7 +10,7 @@ class HomeTest extends TestCase {
      *
      * @return void
      */
-    public function testBasicExample() {
+    public function testHomePage() {
         $this->visit('/')
              ->see('Which site would you like to visit?');
     }
