@@ -49,4 +49,13 @@ class FeatureContext extends MinkContext implements Context {
             $this->assertElementContainsText('nav.navbar', $item[0]);
         }
     }
+
+    /**
+     * @Given /^I should see links to:$/
+     */
+    public function iShouldSeeLinksTo(TableNode $table) {
+        foreach ($table->getRows() as $item) {
+            $this->assertElementOnPage('a img[alt="'.$item[0].'"]');
+        }
+    }
 }

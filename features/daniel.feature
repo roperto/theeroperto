@@ -6,21 +6,21 @@ Feature: Daniel's Site
   Scenario: Main Menu
     Given I am on Daniel's site
     Then I should see the following options in the main menu:
-      | About Me  |
+      | About Me |
 #      | Portfolio |
 #      | Projects  |
 
-#  Scenario: About Me Page
-#    Given I am on Daniel's site
-#    When I follow "About Me"
-#    Then I should see "daniel@theeroperto.com"
-#    And I should see links to:
-#      | facebook |
-#      | github   |
-#      | linkedin |
-#      | google+  |
-#      | youtube  |
-#
+  Scenario: About Me Page
+    Given I am on Daniel's site
+    When I follow "About Me"
+    Then I should see "daniel@theeroperto.com"
+    And I should see links to:
+      | Facebook |
+      | GitHub   |
+      | Google+  |
+      | LinkedIn |
+      | YouTube  |
+
 #  Scenario: Portfolio Overview
 #    Given I am on Daniel's site
 #    When I follow "Portfolio > Overview" in the main menu
