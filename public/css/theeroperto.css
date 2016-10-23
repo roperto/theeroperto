@@ -1,0 +1,83 @@
+.portfolio > section > p {
+	padding-left: 40px;
+	text-align: justify;
+}
+
+A.screenshot {
+	white-space: nowrap;
+}
+
+A.screenshot:hover {
+	text-decoration: none;
+}
+
+div.pictures-box {
+	margin: 15px;
+	text-align: center;
+}
+
+div.pictures-box a img {
+	margin: 2px;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+
+div.pictures-60x40 a img {
+	width: 60px;
+	height: 40px;
+}
+
+div.pictures-60x45 a img {
+	width: 60px;
+	height: 45px;
+}
+
+div.pictures-70x35 a img {
+	width: 60px;
+	height: 45px;
+}
+
+div.pictures-75x50 a img {
+	width: 75px;
+	height: 50px;
+}
+
+div.pictures-100x75 a img {
+	width: 100px;
+	height: 75px;
+}
+
+figure.youtube-video {
+	margin: 20px 0;
+}
+
+figure.youtube-video figcaption {
+	font-size: 90%;
+	text-align: center;
+	font-style: italic;
+}
+
+ul.nav-pills {
+	top: 60px;
+	position: fixed;
+}
+
+div.col-sm-9 div {
+	height: 250px;
+	font-size: 28px;
+}
+
+.hash-anchor {
+	padding-top: 50px;
+	margin-top: -50px;
+}
+
+@media screen and (max-width: 810px) {
+	article.col-sm-9 {
+		margin-left: 150px;
+	}
+}
+
+.large-tooltip + .tooltip > .tooltip-inner {
+	font-size: 120%;
+}

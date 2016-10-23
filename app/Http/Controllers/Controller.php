@@ -14,6 +14,11 @@ abstract class Controller extends BaseController {
     public function __construct() {
         view()->share('theeroperto', [
             'names' => TheeRoperto::getNames(),
+            'person' => $this->getPerson(),
+            'menu' => $this->getMainMenu(),
         ]);
     }
+
+    abstract function getPerson();
+    abstract function getMainMenu();
 }

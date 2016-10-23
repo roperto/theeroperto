@@ -12,6 +12,8 @@
 */
 
 Route::get('/', 'HomeController@getIndex');
+Route::get('Daniel/{area?}/{subarea?}/{item?}', 'DanielController@get');
+
 
 Route::get('/Amelia', function () {
     return view('amelia/index');

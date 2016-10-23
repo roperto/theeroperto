@@ -33,4 +33,20 @@ class FeatureContext extends MinkContext implements Context {
         $this->assertSession()->addressEquals($this->locatePath($name));
         $this->assertSession()->elementContains('xpath', '/head/title', $name.' Thee Roperto');
     }
+
+    /**
+     * @Given /^I am on Daniel's site$/
+     */
+    public function iAmOnDanielSSite() {
+        $this->visit(url('/Daniel'));
+    }
+
+    /**
+     * @Then /^I should see the following options in the main menu:$/
+     */
+    public function iShouldSeeTheFollowingOptionsInTheMainMenu(TableNode $table) {
+        foreach ($table->getRows() as $item) {
+            $this->assertElementContainsText('nav.navbar', $item[0]);
+        }
+    }
 }
