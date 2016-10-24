@@ -46,6 +46,9 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase {
             if ($item->getUrl() === $url) {
                 return true;
             }
+            if (self::checkMenuContainsUrl($url, $item->getSubItems())) {
+                return true;
+            }
         }
         return false;
     }

@@ -6,8 +6,8 @@ Feature: Daniel's Site
   Scenario: Main Menu
     Given I am on Daniel's site
     Then I should see the following options in the main menu:
-      | About Me |
-#      | Portfolio |
+      | About Me  |
+      | Portfolio |
 #      | Projects  |
 
   Scenario: About Me Page
@@ -21,10 +21,11 @@ Feature: Daniel's Site
       | LinkedIn |
       | YouTube  |
 
-#  Scenario: Portfolio Overview
-#    Given I am on Daniel's site
-#    When I follow "Portfolio > Overview" in the main menu
-#    Then I should see a list of projects with image, title, summary and description
+  Scenario: Portfolio Overview
+    Given I am on Daniel's site
+    When I follow "Portfolio" > "Overview" in the main menu
+    Then I should see "My Portfolio"
+    And I should see the title of all portfolio projects
 #
 #  Scenario: Portfolio Page
 #    Given I am on Daniel's site

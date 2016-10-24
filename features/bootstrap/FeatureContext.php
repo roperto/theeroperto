@@ -1,8 +1,10 @@
 <?php
 
+use App\DanielRepository;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\MinkExtension\Context\MinkContext;
 
 /**
@@ -56,6 +58,28 @@ class FeatureContext extends MinkContext implements Context {
     public function iShouldSeeLinksTo(TableNode $table) {
         foreach ($table->getRows() as $item) {
             $this->assertElementOnPage('a img[alt="'.$item[0].'"]');
+        }
+    }
+
+    /**
+     * @When /^I follow "([^"]*)" > "([^"]*)" in the main menu$/
+     */
+    public function iFollowInTheMainMenu1($submenu, $option) {
+        $locator = "nav.navbar ul.nav li.dropdown a[title='{$submenu}'] + ul li a[title='{$option}']";
+        $link = $this->getSession()->getPage()->findAll('css', $locator);
+        if (count($link) == 0) {
+            throw new ElementNotFoundException($this->getDriver(), 'link', 'css', $locator);
+        }
+        $link[0]->click();
+    }
+
+    /**
+     * @Given /^I should see the title of all portfolio projects$/
+     */
+    public function iShouldSeeTheTitleOfAllPortfolioProjects() {
+        $portfolioProjects = DanielRepository::createPortfolio();
+        foreach ($portfolioProjects as $portfolioProject) {
+            $this->assertSession()->pageTextContains($portfolioProject->title);
         }
     }
 }

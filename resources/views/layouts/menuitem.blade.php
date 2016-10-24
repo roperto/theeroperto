@@ -1,6 +1,6 @@
 @if ($item->hasSubitems())
 	<li class="dropdown">
-		<a href="#"
+		<a href="#" title="{{$item->getLongTitle()}}"
 				class="dropdown-toggle" data-toggle="dropdown" role="button"
 				aria-haspopup="true" aria-expanded="false">{{$item->getLongTitle()}} <span class="caret"></span></a>
 		<ul class="dropdown-menu">
@@ -13,6 +13,6 @@
 	@if ($item->isSeparator())
 		<li role="separator" class="divider"></li>
 	@else
-		<li><a href="{{ url($item->getUrl()) }}">{{$short ? $item->getShortTitle() : $item->getLongTitle()}}</a></li>
+		<li><a title="{{$item->getLongTitle()}}" href="{{ url($item->getUrl()) }}">{{$short ? $item->getShortTitle() : $item->getLongTitle()}}</a></li>
 	@endif
 @endif
