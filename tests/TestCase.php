@@ -23,13 +23,17 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase {
         return $app;
     }
 
-    public static function assertPathGetsView($expected, $path, $message = '') {
+    public static function fetchRouteResult($path) {
         $request = Mockery::mock('\Illuminate\Http\Request');
         $request->shouldReceive('getMethod')->andReturn('GET');
         $request->shouldReceive('path')->andReturn($path);
         $request->shouldReceive('decodedPath')->andReturn($path);
         $route = Route::getRoutes()->match($request);
-        $result = $route->run($request);
+        return $route->run($request);
+    }
+
+    public static function assertPathGetsView($expected, $path, $message = '') {
+        $result = static::fetchRouteResult($path);
         self::assertInstanceOf(\Illuminate\View\View::class, $result, $message);
         self::assertSame($expected, $result->getName(), $message);
     }

@@ -30,3 +30,5 @@ Route::get('/Daniel', function () {
 Route::get('/Luigi', function () {
     return view('luigi/index');
 });
+
+Route::get('cache/images/{url}', 'CacheController@getImage')->where('url', '.*');

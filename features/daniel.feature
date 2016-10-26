@@ -26,19 +26,38 @@ Feature: Daniel's Site
     When I follow "Portfolio" > "Overview" in the main menu
     Then I should see "My Portfolio"
     And I should see the title of all portfolio projects
-#
-#  Scenario: Portfolio Page
-#    Given I am on Daniel's site
-#    When I follow "Portfolio > Overview" in the main menu
-#    And I click on every available project
-#    Then I should see in each of them:
-#      | Technologies     |
-#      | Objective        |
-#      | Responsabilities |
-#      | Core Features    |
-#      | Technology Usage |
-#      | Gallery          |
-#
+
+  Scenario Outline: Portfolio Page
+    Given I am on Daniel's site
+    When I follow "Portfolio" > "<title>" in the main menu
+    Then I should see "Technologies"
+    And I should see "Objective"
+    And I should see "Responsabilities"
+    And I should see "Core Features"
+    And I should see "Technology Usage"
+    And I should see "Gallery"
+    Examples:
+      | title                       |
+      | Estil                       |
+      | InterSpace                  |
+      | Portal Geral NET            |
+      | TonyCar                     |
+      | MestreVirtual de Matemática |
+      | MestreVirtual de Física     |
+      | Dinheiro do Brasil          |
+      | IRC@WEB                     |
+      | Quem Eu Quero               |
+      | Portal Floripa              |
+      | Dominó Floripa              |
+      | Intranet Rattan             |
+      | Escadas Manske              |
+      | Portais Na Web              |
+      | Sistema Perdigão            |
+      | você@web                    |
+      | Ball Fight                  |
+      | Intranet Cantina            |
+      | Loja Geral.NET              |
+
 #  Scenario: Projects Overview
 #    Given I am on Daniel's site
 #    When I follow "Projects > Overview" in the main menu
