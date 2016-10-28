@@ -82,4 +82,14 @@ class FeatureContext extends MinkContext implements Context {
             $this->assertSession()->pageTextContains($portfolioProject->title);
         }
     }
+
+    /**
+     * @Given /^I should see the title of all projects$/
+     */
+    public function iShouldSeeTheTitleOfAllProjects() {
+        $projects = DanielRepository::createProjects();
+        foreach ($projects as $project) {
+            $this->assertSession()->pageTextContains($project->title);
+        }
+    }
 }

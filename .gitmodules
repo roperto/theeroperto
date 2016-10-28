@@ -1,0 +1,3 @@
+[submodule "public/images"]
+	path = public/images
+	url = git@github.com:roperto/theeroperto-images.git

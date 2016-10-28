@@ -17,8 +17,10 @@ class DanielTest extends TestCase {
     }
 
     public function testGetMainMenu() {
-        self::assertMenuContainsUrl('Daniel/About', (new DanielController())->getMainMenu());
-        self::assertMenuContainsUrl('Daniel/Portfolio', (new DanielController())->getMainMenu());
+        $menu = (new DanielController())->getMainMenu();
+        self::assertMenuContainsUrl('Daniel/About', $menu);
+        self::assertMenuContainsUrl('Daniel/Portfolio', $menu);
+        self::assertMenuContainsUrl('Daniel/Projects', $menu);
     }
 
     /**

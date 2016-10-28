@@ -8,7 +8,7 @@ Feature: Daniel's Site
     Then I should see the following options in the main menu:
       | About Me  |
       | Portfolio |
-#      | Projects  |
+      | Projects  |
 
   Scenario: About Me Page
     Given I am on Daniel's site
@@ -58,32 +58,32 @@ Feature: Daniel's Site
       | Intranet Cantina            |
       | Loja Geral.NET              |
 
-#  Scenario: Projects Overview
-#    Given I am on Daniel's site
-#    When I follow "Projects > Overview" in the main menu
-#    Then I should see a list of projects with image, title and summary
-#
-#  Scenario: Projects from Bachelor and Masters
-#    Given I am on Daniel's site
-#    When I follow "Projects > Bachelor & Masters" in the main menu
-#    Then I should see:
-#      | Tank Wars                             |
-#      | Shaders Programming                   |
-#      | OpenGL Terrain and Pattern Generator  |
-#      | 3D Rigging and Animation              |
-#      | Ray Tracing                           |
-#      | Green Kangaroo - iPhone Game          |
-#      | Sounds from Heaven - Research Project |
-#
-#
-#  Scenario: Slot Car Lap Counter Project
-#    Given I am on Daniel's site
-#    When I follow "Projects > Slot Car Lap Counter" in the main menu
-#    Then I should see:
-#      | Overview   |
-#      | How to use |
-#      | Downloads  |
-#      | Firmware   |
-#      | Hardware   |
-#      | DIY        |
-#      | Log        |
+  Scenario: Portfolio Overview
+    Given I am on Daniel's site
+    When I follow "Projects" > "Overview" in the main menu
+    Then I should see "Projects"
+    And I should see the title of all projects
+
+  Scenario: Projects from Bachelor and Masters
+    Given I am on Daniel's site
+    When I follow "Projects" > "Bachelor & Masters" in the main menu
+    Then I should see "Bachelor & Masters"
+    And  I should see "Tank Wars"
+    And I should see "Shaders Programming"
+    And I should see "OpenGL Terrain and Pattern Generator"
+    And I should see "3D Rigging and Animation"
+    And I should see "Ray Tracing"
+    And I should see "Green Kangaroo - iPhone Game"
+    And I should see "Sounds from Heaven - Research Project"
+
+  Scenario: Slot Car Lap Counter Project
+    Given I am on Daniel's site
+    When I follow "Projects" > "Slot Car Lap Counter" in the main menu
+    Then I should see "Slot Car Lap Counter"
+    And I should see "Overview"
+    And I should see "How to use"
+    And I should see "Downloads"
+    And I should see "Firmware"
+    And I should see "Hardware"
+    And I should see "DIY"
+    And I should see "Log"
