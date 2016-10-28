@@ -6,6 +6,7 @@ php:
 # If a new commit is pushed, other builds can abort anyway.
 git:
   depth: 1
+  submodules: false
 
 before_script:
   - php -S localhost &
