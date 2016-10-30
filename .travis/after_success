@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -v
+
+echo "*** TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST}"
+if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
+    echo "*** Pull request detected, halted."
+    exit
+fi
+
+echo "*** TRAVIS_BRANCH=${TRAVIS_BRANCH}"
+if [ "${TRAVIS_BRANCH}" != "integration" ]; then
+    echo "*** Not integration, halted."
+    exit
+fi
+
+git config --global user.name TravisCI || exit $?
+git config --global user.email travis@travis.test || exit $?
+git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' || exit $?
+git remote set-url origin https://${GITHUB_TOKEN}@github.com/roperto/theeroperto.git || exit $?
+git remote update || exit $?
+
+BUILD_SHA=`git rev-parse --verify HEAD`
+INTEGRATION_SHA=`git rev-parse --verify origin/integration`
+echo "***       BUILD_SHA=${BUILD_SHA}" \
+    && echo "*** INTEGRATION_SHA=${INTEGRATION_SHA}"
+if [ "${BUILD_SHA}" != "${INTEGRATION_SHA}" ]; then
+    echo "*** SHAs do not match, halted."
+    exit
+fi
+
+git checkout origin/integration || exit $?
+git checkout -b production || exit $?
+git push -qf --set-upstream origin production || exit $?

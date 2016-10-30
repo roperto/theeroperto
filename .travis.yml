@@ -6,7 +6,10 @@ php:
 # If a new commit is pushed, other builds can abort anyway.
 git:
   depth: 1
-  submodules: false
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install python3
 
 before_script:
   - php -S localhost &
@@ -19,3 +22,6 @@ before_script:
 script:
   - vendor/bin/phpunit
   - vendor/bin/behat
+
+after_success:
+  - .travis/after_success -v
