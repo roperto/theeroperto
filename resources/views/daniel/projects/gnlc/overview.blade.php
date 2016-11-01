@@ -2,8 +2,8 @@
 
 @section('content-submenu')
 	<header class="jumbotron">
-		<h1>{{$project->title}}</h1>
-		<i>{{$project->summary}}</i><br />
+		<h1>{{$project->getTitle()}}</h1>
+		<i>{{$project->getSummary()}}</i><br />
 	</header>
 	<section>
 		<h1>Overview</h3>

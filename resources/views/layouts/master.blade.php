@@ -1,4 +1,3 @@
-<?php use App\Helpers\PhotoSwipeHelper; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

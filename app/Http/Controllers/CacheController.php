@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Illuminate\Routing\Controller;
 use Intervention\Image\Facades\Image;
 
 class CacheController extends Controller {

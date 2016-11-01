@@ -28,5 +28,5 @@
 ?>
 
 @section('title')
-	{{$project->title}} - Projects - Daniel Thee Roperto
+	{{$project->getTitle()}} - Projects - Daniel Thee Roperto
 @endsection

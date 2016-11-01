@@ -6,7 +6,7 @@ use App\Http\Requests;
 
 use App\MenuItem;
 
-class HomeController extends Controller {
+class HomeController extends TheeRopertoController {
     public function getIndex() {
         return view('home.index');
     }

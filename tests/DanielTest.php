@@ -1,11 +1,8 @@
 <?php
 
-use App\DanielRepository;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use App\Http\Controllers\DanielController;
+use App\Models\PortfolioProject;
+use App\Repository\Daniel\PortfolioProjectsRepository;
 
 class DanielTest extends TestCase {
     public function testControllerRoutes() {

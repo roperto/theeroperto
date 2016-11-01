@@ -1,30 +1,25 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\DanielRepository;
-
 use App\MenuItem;
+use App\Repository\Daniel\PortfolioProjectsRepository;
+use App\Repository\Daniel\ProjectsRepository;
 
-class DanielController extends Controller {
-    public function getPerson() {
-        return 'Daniel';
-    }
-
+class DanielController extends TheeRopertoController {
     public function getMainMenu() {
         $portfolio = MenuItem::create('Portfolio');
         $portfolio->addSubItem(MenuItem::create('Overview', $this->getPerson().'/Portfolio'));
         $portfolio->addSubItem(MenuItem::create());
-        foreach (DanielRepository::createPortfolio() as $p) {
-            $portfolio->addSubItem(MenuItem::create($p->title, $this->getPerson().'/Portfolio/'.$p->key));
+        foreach (PortfolioProjectsRepository::create() as $p) {
+            $portfolio->addSubItem(MenuItem::create($p->getTitle(), $this->getPerson().'/Portfolio/'.$p->getKey()));
         }
 
         $projects = MenuItem::create('Projects');
         $projects->addSubItem(MenuItem::create('Overview', $this->getPerson().'/Projects'));
         $projects->addSubItem(MenuItem::create());
-        foreach (DanielRepository::createProjects() as $p) {
-            $projects->addSubItem(MenuItem::create($p->title, $this->getPerson().'/Projects/'.$p->key));
+        foreach (ProjectsRepository::create() as $p) {
+            $projects->addSubItem(MenuItem::create($p->getTitle(), $this->getPerson().'/Projects/'.$p->getKey()));
         }
 
         return [
@@ -32,6 +27,10 @@ class DanielController extends Controller {
             $portfolio,
             $projects,
         ];
+    }
+
+    public function getPerson() {
+        return 'Daniel';
     }
 
     public function get($area = 'About', $subarea = null, $item = null) {
@@ -48,20 +47,21 @@ class DanielController extends Controller {
     }
 
     private function getPortfolio($key) {
-        $projects = DanielRepository::createPortfolio();
+        $portfolio = PortfolioProjectsRepository::create();
         if ($key == null) {
-            $projects = array_reverse($projects);
-            return view('daniel.portfolio', ['projects' => $projects]);
+            $portfolio->sortNewestFirst();
+            return view('daniel.portfolio', ['portfolio' => $portfolio]);
         }
         // has key, show specific project
-        if (!array_key_exists($key, $projects)) {
+        $project = $portfolio->getProject($key);
+        if (is_null($project)) {
             abort(404, 'Portfolio item not found.');
         }
-        return view('daniel.portfolio_project', ['project' => $projects[$key]]);
+        return view('daniel.portfolio_project', ['project' => $project]);
     }
 
     private function getProjects($key, $part) {
-        $projects = DanielRepository::createProjects();
+        $projects = ProjectsRepository::create();
         $view = 'daniel.projects';
 
         if ($key == null)

@@ -1,8 +1,8 @@
 <?php
 
-use App\DanielRepository;
+use App\Repository\Daniel\PortfolioProjectsRepository;
+use App\Repository\Daniel\ProjectsRepository;
 use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\MinkExtension\Context\MinkContext;
@@ -68,7 +68,7 @@ class FeatureContext extends MinkContext implements Context {
         $locator = "nav.navbar ul.nav li.dropdown a[title='{$submenu}'] + ul li a[title='{$option}']";
         $link = $this->getSession()->getPage()->findAll('css', $locator);
         if (count($link) == 0) {
-            throw new ElementNotFoundException($this->getDriver(), 'link', 'css', $locator);
+            throw new ElementNotFoundException($this->getSession(), 'link', 'css', $locator);
         }
         $link[0]->click();
     }
@@ -77,9 +77,9 @@ class FeatureContext extends MinkContext implements Context {
      * @Given /^I should see the title of all portfolio projects$/
      */
     public function iShouldSeeTheTitleOfAllPortfolioProjects() {
-        $portfolioProjects = DanielRepository::createPortfolio();
+        $portfolioProjects = PortfolioProjectsRepository::create();
         foreach ($portfolioProjects as $portfolioProject) {
-            $this->assertSession()->pageTextContains($portfolioProject->title);
+            $this->assertSession()->pageTextContains($portfolioProject->getTitle());
         }
     }
 
@@ -87,9 +87,9 @@ class FeatureContext extends MinkContext implements Context {
      * @Given /^I should see the title of all projects$/
      */
     public function iShouldSeeTheTitleOfAllProjects() {
-        $projects = DanielRepository::createProjects();
+        $projects = ProjectsRepository::create();
         foreach ($projects as $project) {
-            $this->assertSession()->pageTextContains($project->title);
+            $this->assertSession()->pageTextContains($project->getTitle());
         }
     }
 }

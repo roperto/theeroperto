@@ -18,15 +18,15 @@
 					padding: 5px;
 					cursor: pointer;
 					color: inherit;
-						" href="/Daniel/Projects/{{$p->key}}">
+						" href="/Daniel/Projects/{{$p->getKey()}}">
 					<div style="text-align: center;">
-						<img src="/images/daniel/projects/{{$p->key}}/cover.png"
+						<img src="/images/daniel/projects/{{$p->getKey()}}/cover.png"
 							style="border: 1px solid gray; border-radius:5px; margin-bottom: 5px;"
 							width="230" height="150" />
 					</div>
-					<strong>{{$p->title}}</strong>
+					<strong>{{$p->getTitle()}}</strong>
 					<div style="padding: 5px 20px; text-align: justify; min-height: 75px;">
-						<i>{{$p->summary}}</i>
+						<i>{{$p->getSummary()}}</i>
 					</div>
 				</a>
 			</div>

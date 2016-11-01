@@ -32,7 +32,7 @@ Feature: Daniel's Site
     When I follow "Portfolio" > "<title>" in the main menu
     Then I should see "Technologies"
     And I should see "Objective"
-    And I should see "Responsabilities"
+    And I should see "Responsibilities"
     And I should see "Core Features"
     And I should see "Technology Usage"
     And I should see "Gallery"
