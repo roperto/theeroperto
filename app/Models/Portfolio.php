@@ -25,6 +25,7 @@ class Portfolio implements Iterator {
     public function sortNewestFirst() {
         usort($this->projects, function ($a, $b) {
             $result = MonthYear::compare($a->getStarted(), $b->getStarted());
+            $result = -$result; // Make it descending by date.
             if ($result != 0) {
                 return $result;
             }
