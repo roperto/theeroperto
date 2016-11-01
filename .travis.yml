@@ -24,4 +24,4 @@ script:
   - vendor/bin/behat
 
 after_success:
-  - .travis/after_success -v
+  - scripts/travis_after-success

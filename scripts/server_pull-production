@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -x
+
+echo
+echo
+
+date
+
+REPO="https://github.com/roperto/theeroperto.git"
+SHA_LOCAL=`git rev-parse --verify HEAD`
+SHA_REMOTE=`git ls-remote ${REPO} production`
+SHA_REMOTE="${SHA_REMOTE:0:40}"
+
+if [ "${SHA_LOCAL}" = "${SHA_REMOTE}" ]; then
+    echo "SHAs are the same, halted."
+    date
+    exit
+fi
+
+git remote set-url origin ${REPO}
+git fetch origin
+git remote prune origin
+git checkout production
+git reset --hard origin/production
+
+date
