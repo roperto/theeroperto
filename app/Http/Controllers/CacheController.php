@@ -1,7 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
+use App\Structures\CachedImageParameters;
+use App\Structures\Dimension;
 use Intervention\Image\Facades\Image;
 
 /**
@@ -11,33 +12,22 @@ use Intervention\Image\Facades\Image;
 class CacheController extends Controller {
     private $allowedSizes = ['100x75'];
 
+    /**
+     * @param $url
+     * @return mixed
+     */
     public function getImage($url) {
         $parameters = $this->getImageParameters($url);
-        $this->createCacheDirectory($parameters['cache']);
-        $this->generateCachedImage($parameters);
-        return response(file_get_contents($parameters['cache']))->header('Content-Type', 'image/png');
-
-        // WITH INTERVENTION -- Not compatible with HostPapa
-        // // read source
-        // $img = Image::make($sourcePath);
-        // $w = $img->width();
-        // $h = $img->height();
-        // // resize before cropping
-        // if (($w / $h) > ($size[0] / $size[1])) {
-        // $w = round($w * ($size[1] / $h));
-        // $h = $size[1];
-        // }
-        // else {
-        // $h = round($h * ($size[0] / $w));
-        // $w = $size[0];
-        // }
-        // $img = $img->resize($w, $h)->crop($size[0], $size[1]);
-        // // save cache and show it
-        // $img->save($cachePath);
-        // return $img->response();
+        $this->createCacheDirectory($parameters->getCachedImagePath());
+        $this->generateCachedImageWithIntervention($parameters);
+        return response(file_get_contents($parameters->getCachedImagePath()))->header('Content-Type', 'image/png');
     }
 
-    private function getImageParameters($url) {
+    /**
+     * @param $url
+     * @return CachedImageParameters
+     */
+    private function getImageParameters($url) : CachedImageParameters {
         $originalImagesBasePath = public_path().'/images/';
         $originalImageDirectory = $originalImagesBasePath.dirname($url);
 
@@ -70,13 +60,12 @@ class CacheController extends Controller {
             abort(500, 'Cache already exists.');
         }
 
-        return [
-            'original' => $originalImagePath,
-            'cache' => $cachedImagePath,
-            'size' => $size,
-        ];
+        return new CachedImageParameters($originalImagePath, $cachedImagePath, Dimension::createFromString($size));
     }
 
+    /**
+     * @param $cache
+     */
     private function createCacheDirectory($cache) {
         $dir = dirname($cache);
         if (!file_exists($dir) && !mkdir($dir, 0777, true)) {
@@ -87,10 +76,35 @@ class CacheController extends Controller {
         }
     }
 
-    private function generateCachedImage($parameters) {
+    private function generateCachedImageWithIntervention(CachedImageParameters $parameters) {
+        // read source
+        $img = Image::make($parameters->getOriginalImagePath());
+        $w = $img->width();
+        $h = $img->height();
+        // resize before cropping
+        $size = $parameters->getSize();
+        $size = [$size->getWidth(), $size->getHeight()];
+        if (($w / $h) > ($size[0] / $size[1])) {
+            $w = round($w * ($size[1] / $h));
+            $h = $size[1];
+        } else {
+            $h = round($h * ($size[0] / $w));
+            $w = $size[0];
+        }
+        $img = $img->resize($w, $h)->crop($size[0], $size[1]);
+        // save cache and show it
+        $img->save($parameters->getCachedImagePath());
+        return $img->response();
+    }
+
+    /**
+     * @param CachedImageParameters $parameters
+     */
+    private function generateCachedImageWithGD(CachedImageParameters $parameters) {
         // calculate size
-        $size = explode('x', $parameters['size']);
-        list($w, $h) = getimagesize($parameters['original']);
+        $size = $parameters->getSize();
+        $size = [$size->getWidth(), $size->getHeight()];
+        list($w, $h) = getimagesize($parameters->getOriginalImagePath());
         $crop_w = $w;
         $crop_h = $h;
         if (($w / $h) > ($size[0] / $size[1])) {
@@ -102,11 +116,11 @@ class CacheController extends Controller {
         $crop_y = round(($h - $crop_h) / 2);
         // return "src:[w={$w} h={$h}] crop:[w={$crop_w} h={$crop_h} x={$crop_x} y={$crop_y}] size:[w={$size[0]} h={$size[1]}]";
         // open source and create resized
-        $src = imagecreatefrompng($parameters['original']);
+        $src = imagecreatefrompng($parameters->getOriginalImagePath());
         $dst = imagecreatetruecolor($size[0], $size[1]);
         imagecopyresampled($dst, $src, 0, 0, $crop_x, $crop_y, $size[0], $size[1], $crop_w, $crop_h);
         imagedestroy($src);
-        imagepng($dst, $parameters['cache'], 9);
+        imagepng($dst, $parameters->getCachedImagePath(), 9);
         imagedestroy($dst);
     }
 }

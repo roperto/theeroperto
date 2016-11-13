@@ -167,7 +167,7 @@ return [
          * Package Service Providers...
          */
 
-        //
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,6 +227,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'PhotoSwipeHelper' => \App\Helpers\PhotoSwipeHelper::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];
