@@ -23,4 +23,6 @@ git remote prune origin
 git checkout production
 git reset --hard origin/production
 
+composer install
+
 date
